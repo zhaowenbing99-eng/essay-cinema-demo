@@ -3,128 +3,158 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>作文放映厅 · 拍一张作文，变成一分钟动画</title>
-<meta name="description" content="上传小学生作文照片，AI 逐字识别、按 30 分制批改，并生成一分钟动画短片。">
+<title>作文放映厅 · 一篇作文，三分钟变成一部动画</title>
+<meta name="description" content="上传小学生作文照片，AI 逐字识别、30 分制批改，并生成一分钟动画短片。">
 <style>
 *{box-sizing:border-box}
-:root{--ink:#2b1d12;--ink2:#5a4634;--paper:#fbf6ed;--card:#fffdf8;--gold:#c8862f;--accent:#a8541f;--line:#e8d9c2}
-body{margin:0;background:var(--paper);color:var(--ink);line-height:1.75;
- font-family:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
-.wrap{max-width:880px;margin:0 auto;padding:0 20px}
-.hero{padding:40px 0 28px;background:
- radial-gradient(900px 360px at 16% -20%,#f7e3c3 0,rgba(251,246,237,0) 62%),linear-gradient(#fdf8f0,#fbf6ed);
- border-bottom:1px solid var(--line)}
-.hg{display:grid;grid-template-columns:1fr 240px;gap:28px;align-items:center}
+:root{--ink:#2b1d12;--ink2:#5a4634;--paper:#fbf6ed;--card:#fffdf8;--gold:#c8862f;
+--accent:#a8541f;--line:#e8d9c2;--sh:0 10px 30px rgba(90,60,20,.08)}
+body{margin:0;background:var(--paper);color:var(--ink);line-height:1.78;
+font-family:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px}
+nav{position:sticky;top:0;z-index:9;background:rgba(251,246,237,.94);backdrop-filter:blur(8px);
+border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:6px;align-items:center;height:52px;overflow-x:auto}
+nav b{font-family:"Songti SC",serif;font-size:15px;margin-right:10px;white-space:nowrap}
+nav a{padding:5px 11px;border-radius:99px;font-size:13px;color:var(--ink2);text-decoration:none;white-space:nowrap}
+nav a:hover{background:#f1e4cd;color:var(--accent)}
+.hero{padding:46px 0 30px;background:radial-gradient(900px 360px at 16% -20%,#f7e3c3 0,rgba(251,246,237,0) 62%),linear-gradient(#fdf8f0,#fbf6ed);border-bottom:1px solid var(--line)}
+.hg{display:grid;grid-template-columns:1fr 230px;gap:26px;align-items:center}
 .k{letter-spacing:.26em;font-size:11.5px;color:var(--accent);font-weight:600;margin-bottom:12px}
-h1{font-family:"Songti SC","STSong",serif;font-size:40px;line-height:1.22;margin:0 0 14px}
-.lede{color:var(--ink2);font-size:15.5px;margin:0 0 22px}
+h1{font-family:"Songti SC","STSong",serif;font-size:38px;line-height:1.24;margin:0 0 14px}
+.lede{color:var(--ink2);font-size:15.5px;margin:0 0 20px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:999px;
+background:var(--accent);color:#fff;text-decoration:none;font-size:15px;box-shadow:0 8px 20px rgba(168,84,31,.26)}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid rgba(168,84,31,.45);box-shadow:none;margin-left:8px}
 .poster{border-radius:14px;overflow:hidden;box-shadow:0 16px 40px rgba(90,60,20,.22);border:1px solid var(--line)}
 .poster img{display:block;width:100%}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;
- background:var(--accent);color:#fff;text-decoration:none;font-size:15px;box-shadow:0 8px 20px rgba(168,84,31,.28)}
-.btn.ghost{background:transparent;color:var(--accent);border:1px solid rgba(168,84,31,.45);box-shadow:none;margin-left:10px}
-section{padding:36px 0;border-bottom:1px solid var(--line)}
+section{padding:34px 0;border-bottom:1px solid var(--line)}
 h2{font-family:"Songti SC",serif;font-size:24px;margin:0 0 6px}
 .sub{color:var(--ink2);font-size:13.5px;margin:0 0 20px}
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
-.step b{display:block;font-family:"Songti SC",serif;color:var(--accent);font-size:15px;margin-bottom:6px}
-.step span{font-size:13px;color:var(--ink2);line-height:1.65}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--sh);margin-bottom:16px}
+.score{display:flex;gap:26px;align-items:flex-end;flex-wrap:wrap;margin-bottom:14px}
+.big{font-family:"Songti SC",serif;font-size:48px;color:var(--accent);line-height:1}
+.big small{font-size:17px;color:var(--ink2)}
+.dims{flex:1;min-width:240px;display:grid;gap:8px}
+.dim{display:grid;grid-template-columns:44px 1fr 46px;gap:10px;align-items:center;font-size:12.5px;color:var(--ink2)}
+.bar{height:7px;background:#efe3cf;border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#e0a33e,#a8541f)}
+.v{text-align:right;font-variant-numeric:tabular-nums}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.box{background:#fdfaf3;border:1px solid var(--line);border-radius:12px;padding:14px 18px}
+.box h4{margin:0 0 8px;font-size:12px;letter-spacing:.14em;color:#7a5a2e}
+.box ul{margin:0;padding-left:17px}.box li{margin:6px 0;font-size:13.5px}
+.note-row{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:13px}
+.note-row:last-child{border-bottom:0}
+.ns{color:#3a2a18;font-weight:600}
+.np{color:#8d4a2a}
+.nf{color:#3f6b35}
+.orig{font-family:"Songti SC",serif;font-size:16px;line-height:2;color:#33240f}
+.orig p{margin:0 0 12px}
 video{width:100%;display:block;border-radius:14px;background:#1a1208;border:1px solid var(--line)}
-table{width:100%;border-collapse:collapse;background:var(--card);border-radius:14px;overflow:hidden;
- box-shadow:0 8px 22px rgba(90,60,20,.07)}
-th,td{padding:12px 14px;border-bottom:1px solid var(--line);font-size:14px;text-align:left}
-th{background:#f6ead5;color:#6b4a24;font-size:12px;letter-spacing:.08em;font-weight:600}
+.shots{display:grid;grid-template-columns:180px 1fr;gap:16px;align-items:start;margin-bottom:18px}
+.shots img{width:100%;border-radius:10px;border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:14px;overflow:hidden;box-shadow:var(--sh)}
+th,td{padding:11px 14px;border-bottom:1px solid var(--line);font-size:14px;text-align:left}
+th{background:#f6ead5;color:#6b4a24;font-size:12px;letter-spacing:.08em}
 tr:last-child td{border-bottom:0}
-td.code{font-family:ui-monospace,Menlo,monospace;font-size:16px;color:var(--accent);font-weight:600;letter-spacing:.04em}
-.copy{font-size:12px;color:#8b7256;border:1px solid var(--line);background:#fdfaf3;border-radius:8px;
- padding:2px 8px;cursor:pointer;margin-left:8px}
-.note{background:#fdf6e6;border:1px solid #eddcbc;border-radius:12px;padding:14px 16px;font-size:13.5px;color:#6b4a24;margin-top:16px}
-.shots{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
-.shots img{width:100%;border-radius:12px;border:1px solid var(--line);display:block}
-footer{padding:30px 0 54px;color:#8b7256;font-size:12.5px}
-@media(max-width:760px){.hg{grid-template-columns:1fr}.poster{max-width:220px}
- h1{font-size:30px}.steps{grid-template-columns:1fr 1fr}.shots{grid-template-columns:1fr}}
+td.code{font-family:ui-monospace,Menlo,monospace;font-size:15.5px;color:var(--accent);font-weight:600}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+.step b{display:block;font-family:"Songti SC",serif;color:var(--accent);font-size:14px;margin-bottom:5px}
+.step span{font-size:12.5px;color:var(--ink2);line-height:1.6}
+.tip{background:#fdf6e6;border:1px solid #eddcbc;border-radius:12px;padding:14px 16px;font-size:13.5px;color:#6b4a24;margin-top:14px}
+footer{padding:28px 0 50px;color:#8b7256;font-size:12.5px}
+@media(max-width:760px){.hg{grid-template-columns:1fr}.poster{max-width:210px}h1{font-size:29px}
+.flow{grid-template-columns:1fr 1fr}.cols{grid-template-columns:1fr}
+.note-row{grid-template-columns:1fr}.shots{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
+<nav><div class="wrap"><b>作文放映厅</b>
+<a href="#case">走一遍</a><a href="#report">批改报告</a><a href="#film">成片</a>
+<a href="#flow">怎么做的</a><a href="#codes">体验码</a></div></nav>
+
 <header class="hero"><div class="wrap hg">
-  <div>
-    <div class="k">A I　作 文 批 改　·　一 分 钟 动 画</div>
-    <h1>拍一张作文，<br>变成一分钟动画</h1>
-    <p class="lede">上传小学生作文照片，AI 逐字识别、按 30 分制批改（含逐句批改与升格范文），
-    再把这篇作文改编成 12 个镜头、带旁白与字幕的一分钟动画。</p>
-    <a class="btn" id="enter" href="#">进入放映厅 →</a>
-    <a class="btn ghost" href="#sample">先看样片</a>
-  </div>
-  <div class="poster"><img src="poster.png" alt="作文放映厅"></div>
+<div>
+  <div class="k">A I　作 文 批 改　·　一 分 钟 动 画</div>
+  <h1>一篇小学生作文，<br>三分钟变成一部动画</h1>
+  <p class="lede">拍一张作文照片，系统逐字识别、按 30 分制批改（逐句批注 + 升格范文），
+  再把这篇作文改编成 12 个镜头、带旁白和字幕的一分钟动画。</p>
+  <a class="btn" href="#case">看一篇完整案例 →</a>
+  <a class="btn ghost" href="#film">直接看片</a>
+</div>
+<div class="poster"><img src="poster.png" alt="作文放映厅"></div>
 </div></header>
 
-<section><div class="wrap">
-  <h2>四步做完</h2>
-  <p class="sub">全程手机操作，不需要装 App。</p>
-  <div class="steps">
-    <div class="step"><b>① 拍照上传</b><span>对着作文拍一页，自动压缩后上传</span></div>
-    <div class="step"><b>② 逐字识别</b><span>手写体也能读，约 20 秒，认错的字可以自己改</span></div>
-    <div class="step"><b>③ 批改报告</b><span>分数、四维打分、3 亮点 3 问题、10 条逐句批注、升格范文</span></div>
-    <div class="step"><b>④ 一分钟动画</b><span>12 个镜头，旁白 + 逐句字幕 + 配乐，约 3 分钟出片</span></div>
-  </div>
+<section id="case"><div class="wrap">
+<h2>走一遍：这篇《观察豆芽》</h2>
+<p class="sub">下面全部是系统真实跑出来的结果，没有手工润色。</p>
+<div class="shots">
+  <div><img src="photo.jpg" alt="作文原图"><div class="sub" style="margin-top:6px">① 家长拍的原图</div></div>
+  <div><div class="sub" style="margin-bottom:6px">② 识别出来的文字（20 秒，可自行改错字）</div>
+    <div class="card orig" style="margin:0"><p>十月一日 星期一 晴</p><p>今天，老师给我们布制了一个任务，是观察豆芽，我高高兴兴的找妈妈要了一把绿豆，把它们泡在水中。</p><p>过了一天白，大绿豆长胖了，比原来大了一圈，就像一个一个大大的肚皮，又过了一天，它们把上衣脱掉了，露出了嫩白嫩白的肚皮。</p><p>又过了好几天，绿豆长出了小个子角，那个能越长，只到它成抓后，我高兴的看着豆芽，妈妈把豆芽拿了出来，过了一会，妈妈走了出来，拿着一个盘子，里面放着豆芽，我们开心的吃了起来。</p><p>这就是我观察的豆芽，你们也来试着观察一些其他的事物吧！</p></div></div>
+</div>
 </div></section>
 
-<section id="sample"><div class="wrap">
-  <h2>样片：一篇《我发现了豆芽》</h2>
-  <p class="sub">这是系统真实生成的结果，60 秒、848×480、带童声旁白与作文原句字幕。</p>
-  <video src="sample-60s.mp4" controls playsinline preload="metadata"></video>
-  <div class="shots">
-    <img src="shot-report.png" alt="批改报告">
-    <img src="shot-home.png" alt="入口页">
+<section id="report"><div class="wrap">
+<h2>批改报告</h2>
+<p class="sub">30 分制；四个维度分别打分；只挑这篇作文里真实存在的问题。</p>
+<div class="card">
+  <div class="score">
+    <div><div class="big">24<small> / 30</small></div>
+    <div class="sub" style="margin:4px 0 0">综合得分</div></div>
+    <div class="dims"><div class="dim"><span>内容</span><span class="bar"><i style="width:70%"></i></span><span class="v">7/10</span></div><div class="dim"><span>结构</span><span class="bar"><i style="width:70%"></i></span><span class="v">7/10</span></div><div class="dim"><span>语言</span><span class="bar"><i style="width:50%"></i></span><span class="v">5/10</span></div><div class="dim"><span>书写</span><span class="bar"><i style="width:50%"></i></span><span class="v">5/10</span></div></div>
   </div>
+  <div class="cols">
+    <div class="box"><h4>三 个 亮 点</h4><ul><li>按“过了一天”“又过了好几天”写变化，观察顺序清楚。</li><li>把绿豆写成“大大的肚皮”“脱掉上衣”，比喻有童趣。</li><li>结尾号召大家观察其他事物，结构完整，有交流感。</li></ul></div>
+    <div class="box"><h4>三 个 问 题</h4><ul><li>“布制”“一天白”“成抓”等错别字和词语不通，影响表达。</li><li>“一个一个大大的肚皮”“那个能越长”重复、病句，意思不清。</li><li>“的/地”混用较多，标点和句子衔接也要再检查。</li></ul></div>
+  </div>
+</div>
+<div class="card">
+  <h4 style="margin:0 0 10px;font-size:12px;letter-spacing:.14em;color:#7a5a2e">逐 句 批 注</h4>
+  <div class="note-row" style="font-size:11.5px;color:#8b7256;border-bottom:1px solid var(--line)">
+    <div>原文</div><div>问题</div><div>怎么改</div></div>
+  <div class="note-row"><div class="ns">老师给我们布制了一个任务</div><div class="np">“布制”是错别字，任务应搭配“布置”。</div><div class="nf">老师给我们布置了一个任务</div></div><div class="note-row"><div class="ns">我高高兴兴的找妈妈要了一把绿豆</div><div class="np">“高高兴兴的”应作状语，用“地”。</div><div class="nf">我高高兴兴地找妈妈要了一把绿豆</div></div><div class="note-row"><div class="ns">过了一天白，大绿豆长胖了</div><div class="np">“一天白”不通，“大绿豆”多余。</div><div class="nf">过了一天，绿豆长胖了</div></div><div class="note-row"><div class="ns">就像一个一个大大的肚皮</div><div class="np">“一个一个”重复，句子不通顺。</div><div class="nf">就像一个个大大的肚皮</div></div><div class="note-row"><div class="ns">露出了嫩白嫩白的肚皮</div><div class="np">意思可懂，但可补出“绿色的外衣”，观察更具体。</div><div class="nf">露出了嫩白嫩白的肚皮，可爱极了</div></div><div class="note-row"><div class="ns">绿豆长出了小个子角</div><div class="np">“小个子角”说法不通，应是长出了芽。</div><div class="nf">绿豆长出了小芽</div></div><div class="note-row"><div class="ns">那个能越长，只到它成抓后</div><div class="np">“那个能越长”“只到”“成抓”都是病句错字。</div><div class="nf">那芽越长越长，直到长成豆芽</div></div><div class="note-row"><div class="ns">我高兴的看着豆芽</div><div class="np">“看着”是动作，“的”应改为“地”。</div><div class="nf">我高兴地看着豆芽</div></div><div class="note-row"><div class="ns">妈妈把豆芽拿了出来，过了一会</div><div class="np">前后动作重复，句子衔接不顺。</div><div class="nf">妈妈把豆芽拿了出来。过了一会儿</div></div><div class="note-row"><div class="ns">我们开心的吃了起来</div><div class="np">“开心”修饰“吃”，应使用“地”。</div><div class="nf">我们开心地吃了起来</div></div>
+</div>
+<div class="card">
+  <h4 style="margin:0 0 10px;font-size:12px;letter-spacing:.14em;color:#7a5a2e">升 格 范 文</h4>
+  <div class="orig"><p>十月一日 星期一 晴</p><p>今天，老师给我们布置了一个任务——观察豆芽。我高高兴兴地找妈妈要了一把绿豆，把它们泡在水中。绿豆圆滚滚的，像一群穿着绿衣服的小娃娃。我每天给它们换水，蹲在旁边看了又看。</p><p>过了一天，绿豆长胖了，比原来大了一圈，就像一个个大大的肚皮。又过了一天，它们把绿色的上衣脱掉了，露出嫩白嫩白的肚皮，可爱极了。我用手轻轻一碰，它们滑溜溜的，好像在和我打招呼。</p><p>又过了好几天，绿豆长出了小芽。那芽先露出白白的小尖，像小逗号，后来越长越长，直到长成豆芽。有的弯弯的，有的直直的，真有意思。我高兴地看着豆芽，妈妈把豆芽拿了出来。过了一会儿，她端着一个盘子走出来，盘子里放着豆芽。我们开心地吃了起来，觉得自己的豆芽特别香。</p><p>这就是我观察的豆芽。你们也来试着观察一些其他事物吧！</p></div>
+</div>
 </div></section>
 
-<section><div class="wrap">
-  <h2>体验码</h2>
-  <p class="sub">一码一人，每码可生成 3 次动画，作文不限篇。用完找我要新码。</p>
-  <table>
-    <thead><tr><th>序号</th><th>体验码</th><th>说明</th></tr></thead>
-    <tbody id="codes"></tbody>
-  </table>
-  <div class="note">
-    <b>重要：</b>「进入放映厅」连的是一台常开的电脑（临时公网隧道），地址可能会变；
-    这个页面是永久地址，地址变了我会在这里更新。打不开工作台时，先用上面的样片了解效果。
-  </div>
+<section id="film"><div class="wrap">
+<h2>一分钟成片</h2>
+<p class="sub">12 个镜头 × 5 秒，848×480，童声旁白 + 作文原句字幕 + 原创配乐。这是系统自动生成的，没有人工剪辑。</p>
+<video src="sample-60s.mp4" controls playsinline preload="metadata"></video>
+<div class="tip">整片由四张 2×2 宫格关键帧切成 12 格，相邻两格作为一段 5 秒视频的首尾帧生成，再硬切拼接——所以镜头之间没有转场特效，却不会跳。</div>
+</div></section>
+
+<section id="flow"><div class="wrap">
+<h2>它是怎么做的</h2>
+<p class="sub">四步，全程手机操作。</p>
+<div class="flow">
+  <div class="step"><b>① 拍照上传</b><span>手机直拍，前端压到 1600px</span></div>
+  <div class="step"><b>② 逐字识别</b><span>DeepSeek V4.1 Flash 视觉，约 20 秒</span></div>
+  <div class="step"><b>③ 批改报告</b><span>四维打分 + 逐句批注 + 升格范文</span></div>
+  <div class="step"><b>④ 一分钟动画</b><span>12 镜头，旁白字幕配乐，约 3 分钟</span></div>
+</div>
+<div class="tip">成片失败会自动退还次数；识别出来的字用户可以自己改，改完再批改——手写体总有认错的地方，让人改两个字比让 AI 硬猜靠谱。</div>
+</div></section>
+
+<section id="codes"><div class="wrap">
+<h2>体验码</h2>
+<p class="sub">一码一人，每码 3 次动画，作文不限篇。</p>
+<table><thead><tr><th>序号</th><th>体验码</th><th>说明</th></tr></thead>
+<tbody><tr><td>01</td><td class="code">PE-WTUU-QRVB</td><td>体验用户01</td></tr><tr><td>02</td><td class="code">PE-MNTZ-Q5QT</td><td>体验用户02</td></tr><tr><td>03</td><td class="code">PE-9UNX-B7EH</td><td>体验用户03</td></tr><tr><td>04</td><td class="code">PE-VLKQ-UYP6</td><td>体验用户04</td></tr><tr><td>05</td><td class="code">PE-XZRK-RP3U</td><td>体验用户05</td></tr><tr><td>06</td><td class="code">PE-RT4T-8GHE</td><td>体验用户06</td></tr><tr><td>07</td><td class="code">PE-CSE3-3U57</td><td>体验用户07</td></tr><tr><td>08</td><td class="code">PE-PNZD-WTH4</td><td>体验用户08</td></tr><tr><td>09</td><td class="code">PE-CY8S-XHGS</td><td>体验用户09</td></tr><tr><td>10</td><td class="code">PE-VAL6-ZGJ7</td><td>体验用户10</td></tr></tbody></table>
+<div class="tip" id="howto">
+<b>怎么用：</b>打开工作台网址 → 输入任意一个体验码 → 拍作文 → 识别 → 批改 → 生成动画。
+工作台地址请找我获取（目前是内部演示环境，名额有限）。
+</div>
 </div></section>
 
 <footer><div class="wrap">
-  作文放映厅 · 识别 DeepSeek-V4.1-Flash ｜ 出片 MiniMax H3-Max 480P ｜ 旁白 MiniMax speech
-  <br>体验码与地址如有疑问，直接找我。
+作文放映厅 · 识别 DeepSeek-V4.1-Flash ｜ 出片 MiniMax H3-Max 480P ｜ 旁白 MiniMax speech-02-hd<br>
+本页是公开介绍页；批改与出片在服务端完成。
 </div></footer>
-
-<script>
-// 工作台地址（隧道重启后会变，只改这一行）
-var APP_URL = "https://belief-monitored-hartford-pas.trycloudflare.com";
-document.getElementById("enter").href = APP_URL;
-
-var CODES = [
-  ["01","PE-WTUU-QRVB","体验用户01"],["02","PE-MNTZ-Q5QT","体验用户02"],
-  ["03","PE-9UNX-B7EH","体验用户03"],["04","PE-VLKQ-UYP6","体验用户04"],
-  ["05","PE-XZRK-RP3U","体验用户05"],["06","PE-RT4T-8GHE","体验用户06"],
-  ["07","PE-CSE3-3U57","体验用户07"],["08","PE-PNZD-WTH4","体验用户08"],
-  ["09","PE-CY8S-XHGS","体验用户09"],["10","PE-VAL6-ZGJ7","体验用户10"]
-];
-var tb = document.getElementById("codes");
-CODES.forEach(function (c) {
-  var tr = document.createElement("tr");
-  tr.innerHTML = '<td>' + c[0] + '</td><td class="code">' + c[1] +
-    '<button class="copy" data-c="' + c[1] + '">复制</button></td><td>' + c[2] + '</td>';
-  tb.appendChild(tr);
-});
-tb.addEventListener("click", function (e) {
-  var b = e.target.closest(".copy"); if (!b) return;
-  var t = b.getAttribute("data-c");
-  var done = function () { b.textContent = "已复制"; setTimeout(function () { b.textContent = "复制"; }, 1500); };
-  if (navigator.clipboard) navigator.clipboard.writeText(t).then(done, done);
-  else { var i = document.createElement("input"); i.value = t; document.body.appendChild(i); i.select(); document.execCommand("copy"); i.remove(); done(); }
-});
-</script>
-</body>
-</html>
+</body></html>
