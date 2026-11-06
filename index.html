@@ -83,7 +83,7 @@ footer{padding:28px 0 50px;color:#8b7256;font-size:12.5px}
   <h1>一篇小学生作文，<br>三分钟变成一部动画</h1>
   <p class="lede">拍一张作文照片，系统逐字识别、按 30 分制批改（逐句批注 + 升格范文），
   再把这篇作文改编成 12 个镜头、带旁白和字幕的一分钟动画。</p>
-  <a class="btn" id="enter" href="https://belief-monitored-hartford-pas.trycloudflare.com">进入工作台（输注册码）→</a>
+  <a class="btn" data-app id="enter" href="https://essay-generation-tyler-types.trycloudflare.com">进入工作台（输注册码）→</a>
   <a class="btn ghost" href="#case">先看一篇案例</a>
 </div>
 <div class="poster"><img src="poster.png" alt="作文放映厅"></div>
@@ -150,10 +150,10 @@ footer{padding:28px 0 50px;color:#8b7256;font-size:12.5px}
 <table><thead><tr><th>序号</th><th>体验码</th><th>说明</th></tr></thead>
 <tbody><tr><td>01</td><td class="code">PE-WTUU-QRVB</td><td>体验用户01</td></tr><tr><td>02</td><td class="code">PE-MNTZ-Q5QT</td><td>体验用户02</td></tr><tr><td>03</td><td class="code">PE-9UNX-B7EH</td><td>体验用户03</td></tr><tr><td>04</td><td class="code">PE-VLKQ-UYP6</td><td>体验用户04</td></tr><tr><td>05</td><td class="code">PE-XZRK-RP3U</td><td>体验用户05</td></tr><tr><td>06</td><td class="code">PE-RT4T-8GHE</td><td>体验用户06</td></tr><tr><td>07</td><td class="code">PE-CSE3-3U57</td><td>体验用户07</td></tr><tr><td>08</td><td class="code">PE-PNZD-WTH4</td><td>体验用户08</td></tr><tr><td>09</td><td class="code">PE-CY8S-XHGS</td><td>体验用户09</td></tr><tr><td>10</td><td class="code">PE-VAL6-ZGJ7</td><td>体验用户10</td></tr></tbody></table>
 <div class="tip" id="howto">
-<b>怎么用：</b><a href="https://belief-monitored-hartford-pas.trycloudflare.com" style="color:#a8541f">打开工作台</a> → 输入任意一个体验码 →
+<b>怎么用：</b><a data-app href="https://essay-generation-tyler-types.trycloudflare.com" style="color:#a8541f">打开工作台</a> → 输入任意一个体验码 →
 拍作文 → 识别 → 批改 → 生成动画。一次完整流程约 3 分钟。
 </div>
-<p class="sub" style="margin-top:10px">工作台地址：<a href="https://belief-monitored-hartford-pas.trycloudflare.com" style="color:#a8541f">https://belief-monitored-hartford-pas.trycloudflare.com</a>
+<p class="sub" style="margin-top:10px">工作台地址：<a data-app href="https://essay-generation-tyler-types.trycloudflare.com" style="color:#a8541f">https://essay-generation-tyler-types.trycloudflare.com</a>
 （演示环境，地址可能会变，变了这页会同步）</p>
 </div></section>
 
@@ -162,7 +162,10 @@ footer{padding:28px 0 50px;color:#8b7256;font-size:12.5px}
 本页是公开介绍页；批改与出片在服务端完成。
 </div></footer>
 <script>
-// 值守脚本会用真实地址覆盖这一行
+// 值守脚本只改这一行；页面里所有入口都跟着它走
 var APP_URL = "https://essay-generation-tyler-types.trycloudflare.com";
+document.querySelectorAll('[data-app]').forEach(function (a) {
+  if (APP_URL) { a.href = APP_URL; if (a.textContent.indexOf('http') === 0) a.textContent = APP_URL; }
+});
 </script>
 </body></html>
