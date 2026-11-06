@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>作文放映厅 · 拍一张作文，变成一分钟动画</title>
+<meta name="description" content="上传小学生作文照片，AI 逐字识别、按 30 分制批改，并生成一分钟动画短片。">
+<style>
+*{box-sizing:border-box}
+:root{--ink:#2b1d12;--ink2:#5a4634;--paper:#fbf6ed;--card:#fffdf8;--gold:#c8862f;--accent:#a8541f;--line:#e8d9c2}
+body{margin:0;background:var(--paper);color:var(--ink);line-height:1.75;
+ font-family:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+.hero{padding:40px 0 28px;background:
+ radial-gradient(900px 360px at 16% -20%,#f7e3c3 0,rgba(251,246,237,0) 62%),linear-gradient(#fdf8f0,#fbf6ed);
+ border-bottom:1px solid var(--line)}
+.hg{display:grid;grid-template-columns:1fr 240px;gap:28px;align-items:center}
+.k{letter-spacing:.26em;font-size:11.5px;color:var(--accent);font-weight:600;margin-bottom:12px}
+h1{font-family:"Songti SC","STSong",serif;font-size:40px;line-height:1.22;margin:0 0 14px}
+.lede{color:var(--ink2);font-size:15.5px;margin:0 0 22px}
+.poster{border-radius:14px;overflow:hidden;box-shadow:0 16px 40px rgba(90,60,20,.22);border:1px solid var(--line)}
+.poster img{display:block;width:100%}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;
+ background:var(--accent);color:#fff;text-decoration:none;font-size:15px;box-shadow:0 8px 20px rgba(168,84,31,.28)}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid rgba(168,84,31,.45);box-shadow:none;margin-left:10px}
+section{padding:36px 0;border-bottom:1px solid var(--line)}
+h2{font-family:"Songti SC",serif;font-size:24px;margin:0 0 6px}
+.sub{color:var(--ink2);font-size:13.5px;margin:0 0 20px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.step b{display:block;font-family:"Songti SC",serif;color:var(--accent);font-size:15px;margin-bottom:6px}
+.step span{font-size:13px;color:var(--ink2);line-height:1.65}
+video{width:100%;display:block;border-radius:14px;background:#1a1208;border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:14px;overflow:hidden;
+ box-shadow:0 8px 22px rgba(90,60,20,.07)}
+th,td{padding:12px 14px;border-bottom:1px solid var(--line);font-size:14px;text-align:left}
+th{background:#f6ead5;color:#6b4a24;font-size:12px;letter-spacing:.08em;font-weight:600}
+tr:last-child td{border-bottom:0}
+td.code{font-family:ui-monospace,Menlo,monospace;font-size:16px;color:var(--accent);font-weight:600;letter-spacing:.04em}
+.copy{font-size:12px;color:#8b7256;border:1px solid var(--line);background:#fdfaf3;border-radius:8px;
+ padding:2px 8px;cursor:pointer;margin-left:8px}
+.note{background:#fdf6e6;border:1px solid #eddcbc;border-radius:12px;padding:14px 16px;font-size:13.5px;color:#6b4a24;margin-top:16px}
+.shots{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.shots img{width:100%;border-radius:12px;border:1px solid var(--line);display:block}
+footer{padding:30px 0 54px;color:#8b7256;font-size:12.5px}
+@media(max-width:760px){.hg{grid-template-columns:1fr}.poster{max-width:220px}
+ h1{font-size:30px}.steps{grid-template-columns:1fr 1fr}.shots{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap hg">
+  <div>
+    <div class="k">A I　作 文 批 改　·　一 分 钟 动 画</div>
+    <h1>拍一张作文，<br>变成一分钟动画</h1>
+    <p class="lede">上传小学生作文照片，AI 逐字识别、按 30 分制批改（含逐句批改与升格范文），
+    再把这篇作文改编成 12 个镜头、带旁白与字幕的一分钟动画。</p>
+    <a class="btn" id="enter" href="#">进入放映厅 →</a>
+    <a class="btn ghost" href="#sample">先看样片</a>
+  </div>
+  <div class="poster"><img src="poster.png" alt="作文放映厅"></div>
+</div></header>
+
+<section><div class="wrap">
+  <h2>四步做完</h2>
+  <p class="sub">全程手机操作，不需要装 App。</p>
+  <div class="steps">
+    <div class="step"><b>① 拍照上传</b><span>对着作文拍一页，自动压缩后上传</span></div>
+    <div class="step"><b>② 逐字识别</b><span>手写体也能读，约 20 秒，认错的字可以自己改</span></div>
+    <div class="step"><b>③ 批改报告</b><span>分数、四维打分、3 亮点 3 问题、10 条逐句批注、升格范文</span></div>
+    <div class="step"><b>④ 一分钟动画</b><span>12 个镜头，旁白 + 逐句字幕 + 配乐，约 3 分钟出片</span></div>
+  </div>
+</div></section>
+
+<section id="sample"><div class="wrap">
+  <h2>样片：一篇《我发现了豆芽》</h2>
+  <p class="sub">这是系统真实生成的结果，60 秒、848×480、带童声旁白与作文原句字幕。</p>
+  <video src="sample-60s.mp4" controls playsinline preload="metadata"></video>
+  <div class="shots">
+    <img src="shot-report.png" alt="批改报告">
+    <img src="shot-home.png" alt="入口页">
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>体验码</h2>
+  <p class="sub">一码一人，每码可生成 3 次动画，作文不限篇。用完找我要新码。</p>
+  <table>
+    <thead><tr><th>序号</th><th>体验码</th><th>说明</th></tr></thead>
+    <tbody id="codes"></tbody>
+  </table>
+  <div class="note">
+    <b>重要：</b>「进入放映厅」连的是一台常开的电脑（临时公网隧道），地址可能会变；
+    这个页面是永久地址，地址变了我会在这里更新。打不开工作台时，先用上面的样片了解效果。
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  作文放映厅 · 识别 DeepSeek-V4.1-Flash ｜ 出片 MiniMax H3-Max 480P ｜ 旁白 MiniMax speech
+  <br>体验码与地址如有疑问，直接找我。
+</div></footer>
+
+<script>
+// 工作台地址（隧道重启后会变，只改这一行）
+var APP_URL = "https://belief-monitored-hartford-pas.trycloudflare.com";
+document.getElementById("enter").href = APP_URL;
+
+var CODES = [
+  ["01","PE-WTUU-QRVB","体验用户01"],["02","PE-MNTZ-Q5QT","体验用户02"],
+  ["03","PE-9UNX-B7EH","体验用户03"],["04","PE-VLKQ-UYP6","体验用户04"],
+  ["05","PE-XZRK-RP3U","体验用户05"],["06","PE-RT4T-8GHE","体验用户06"],
+  ["07","PE-CSE3-3U57","体验用户07"],["08","PE-PNZD-WTH4","体验用户08"],
+  ["09","PE-CY8S-XHGS","体验用户09"],["10","PE-VAL6-ZGJ7","体验用户10"]
+];
+var tb = document.getElementById("codes");
+CODES.forEach(function (c) {
+  var tr = document.createElement("tr");
+  tr.innerHTML = '<td>' + c[0] + '</td><td class="code">' + c[1] +
+    '<button class="copy" data-c="' + c[1] + '">复制</button></td><td>' + c[2] + '</td>';
+  tb.appendChild(tr);
+});
+tb.addEventListener("click", function (e) {
+  var b = e.target.closest(".copy"); if (!b) return;
+  var t = b.getAttribute("data-c");
+  var done = function () { b.textContent = "已复制"; setTimeout(function () { b.textContent = "复制"; }, 1500); };
+  if (navigator.clipboard) navigator.clipboard.writeText(t).then(done, done);
+  else { var i = document.createElement("input"); i.value = t; document.body.appendChild(i); i.select(); document.execCommand("copy"); i.remove(); done(); }
+});
+</script>
+</body>
+</html>
